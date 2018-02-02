@@ -1,4 +1,4 @@
-FSTAR?=fstar $(OTHERFLAGS) --admit_smt_queries true --cache_checked_modules
+FSTAR?=fstar.exe $(OTHERFLAGS) --cache_checked_modules --debug Bane.Lib --debug_level NativeTactics
 
 all: Bane.test
 
@@ -20,7 +20,7 @@ CACHE = _cache
 $(FSTARTACLIB):
 	$(MAKE) -C $(FSTAR_HOME)/ulib install-fstar-tactics
 
-%.cmxs: %.Lib.fst.checked
+%.cmxs: $(FSTARTACLIB) %.Lib.fst.checked
 	mkdir -p $(CACHE)_$*
 	$(FSTAR) --gen_native_tactics $(CACHE)_$* $*.Lib.fst
 
