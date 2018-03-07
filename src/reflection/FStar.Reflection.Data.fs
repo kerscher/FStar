@@ -66,6 +66,25 @@ type refl_constant = {
     t : term;
 }
 
+type expr =
+    | Lit of Z.t
+    | Atom of Z.t * term
+    | Plus of expr * expr
+    | Mult of expr * expr
+    | Minus of expr * expr
+    | Land of expr * expr
+    | Lxor of expr * expr
+    | Lor of expr * expr
+    | Ladd of expr * expr
+    | Lsub of expr * expr
+    | Shl of expr * expr
+    | Shr of expr * expr
+    | Neg of expr
+    | Udiv of expr * expr
+    | Umod of expr * expr
+    | MulMod of expr * expr
+    | NatToBv of expr
+
 let fstar_refl_lid s = Ident.lid_of_path (["FStar"; "Reflection"]@s) Range.dummyRange
 
 let fstar_refl_basic_lid  s = fstar_refl_lid ["Basic";  s]
@@ -149,3 +168,22 @@ let ord_Gt_lid = Ident.lid_of_path (["FStar"; "Order"; "Gt"]) Range.dummyRange
 let ord_Lt = tdataconstr ord_Lt_lid
 let ord_Eq = tdataconstr ord_Eq_lid
 let ord_Gt = tdataconstr ord_Gt_lid
+
+(* expr *)
+let ref_E_Lit = fstar_refl_data_const "Lit"
+let ref_E_Atom = fstar_refl_data_const "Atom"
+let ref_E_Plus = fstar_refl_data_const "Plus"
+let ref_E_Mult = fstar_refl_data_const "Mult"
+let ref_E_Minus = fstar_refl_data_const "Minus"
+let ref_E_Land = fstar_refl_data_const "Land"
+let ref_E_Lxor = fstar_refl_data_const "Lxor"
+let ref_E_Lor = fstar_refl_data_const "Lor"
+let ref_E_Ladd = fstar_refl_data_const "Ladd"
+let ref_E_Lsub = fstar_refl_data_const "Lsub"
+let ref_E_Shl = fstar_refl_data_const "Shl"
+let ref_E_Shr = fstar_refl_data_const "Shr"
+let ref_E_Neg = fstar_refl_data_const "Neg"
+let ref_E_Udiv = fstar_refl_data_const "Udiv"
+let ref_E_Umod = fstar_refl_data_const "Umod"
+let ref_E_MulMod = fstar_refl_data_const "MulMod"
+let ref_E_NatToBv = fstar_refl_data_const "NatToBv"

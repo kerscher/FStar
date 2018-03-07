@@ -14,27 +14,6 @@ module O = FStar.Order
  * feeding to the SMT solver)
  *)
 
-noeq
-type expr =
-    | Lit     : int -> expr
-    // atom, contains both a numerical ID and the actual term encountered
-    | Atom    : nat -> term -> expr
-    | Plus    : expr -> expr -> expr
-    | Mult    : expr -> expr -> expr
-    | Minus   : expr -> expr -> expr
-    | Land    : expr -> expr -> expr
-    | Lxor    : expr -> expr -> expr
-    | Lor     : expr -> expr -> expr
-    | Ladd    : expr -> expr -> expr
-    | Lsub    : expr -> expr -> expr
-    | Shl     : expr -> expr -> expr
-    | Shr     : expr -> expr -> expr
-    | Neg     : expr -> expr
-    | Udiv    : expr -> expr -> expr
-    | Umod    : expr -> expr -> expr
-    | MulMod  : expr -> expr -> expr
-    | NatToBv : expr -> expr
-    // | Div   : expr -> expr -> expr // Add this one?
 
 noeq
 type connective =

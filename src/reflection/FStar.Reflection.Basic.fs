@@ -708,3 +708,93 @@ let binders_of_env e = FStar.TypeChecker.Env.all_binders e
 let type_of_binder (b : binder) = match b with (b, _) -> b.sort
 let term_eq t1 t2 = U.term_eq (U.un_uinst t1) (U.un_uinst t2) // temporary, until universes are exposed
 let term_to_string t = Print.term_to_string t
+
+let rec unembed_expr (t:term) : option<expr> =
+    let t = U.unascribe t in
+    let hd, args = U.head_and_args t in
+    match (U.un_uinst hd).n, args with
+    | Tm_fvar fv, [(i, _)] when S.fv_eq_lid fv ref_E_Lit.lid ->
+        BU.bind_opt (unembed_int i) (fun i ->
+        Some <| Lit i)
+
+    | Tm_fvar fv, [(i, _); (tm, _)] when S.fv_eq_lid fv ref_E_Atom.lid ->
+        BU.bind_opt (unembed_int i) (fun i ->
+        BU.bind_opt (unembed_term tm) (fun tm ->
+        Some <| Atom (i, tm)))
+
+    | Tm_fvar fv, [(e1, _); (e2, _)] when S.fv_eq_lid fv ref_E_Plus.lid ->
+        BU.bind_opt (unembed_expr e1) (fun e1 ->
+        BU.bind_opt (unembed_expr e2) (fun e2 ->
+        Some <| Plus (e1, e2)))
+
+    | Tm_fvar fv, [(e1, _); (e2, _)] when S.fv_eq_lid fv ref_E_Mult.lid ->
+        BU.bind_opt (unembed_expr e1) (fun e1 ->
+        BU.bind_opt (unembed_expr e2) (fun e2 ->
+        Some <| Mult (e1, e2)))
+
+    | Tm_fvar fv, [(e1, _); (e2, _)] when S.fv_eq_lid fv ref_E_Minus.lid ->
+        BU.bind_opt (unembed_expr e1) (fun e1 ->
+        BU.bind_opt (unembed_expr e2) (fun e2 ->
+        Some <| Minus (e1, e2)))
+
+    | Tm_fvar fv, [(e1, _); (e2, _)] when S.fv_eq_lid fv ref_E_Land.lid ->
+        BU.bind_opt (unembed_expr e1) (fun e1 ->
+        BU.bind_opt (unembed_expr e2) (fun e2 ->
+        Some <| Land (e1, e2)))
+
+    | Tm_fvar fv, [(e1, _); (e2, _)] when S.fv_eq_lid fv ref_E_Lxor.lid ->
+        BU.bind_opt (unembed_expr e1) (fun e1 ->
+        BU.bind_opt (unembed_expr e2) (fun e2 ->
+        Some <| Lxor (e1, e2)))
+
+    | Tm_fvar fv, [(e1, _); (e2, _)] when S.fv_eq_lid fv ref_E_Lor.lid ->
+        BU.bind_opt (unembed_expr e1) (fun e1 ->
+        BU.bind_opt (unembed_expr e2) (fun e2 ->
+        Some <| Lor (e1, e2)))
+
+    | Tm_fvar fv, [(e1, _); (e2, _)] when S.fv_eq_lid fv ref_E_Ladd.lid ->
+        BU.bind_opt (unembed_expr e1) (fun e1 ->
+        BU.bind_opt (unembed_expr e2) (fun e2 ->
+        Some <| Ladd (e1, e2)))
+
+    | Tm_fvar fv, [(e1, _); (e2, _)] when S.fv_eq_lid fv ref_E_Lsub.lid ->
+        BU.bind_opt (unembed_expr e1) (fun e1 ->
+        BU.bind_opt (unembed_expr e2) (fun e2 ->
+        Some <| Lsub (e1, e2)))
+
+    | Tm_fvar fv, [(e1, _); (e2, _)] when S.fv_eq_lid fv ref_E_Shl.lid ->
+        BU.bind_opt (unembed_expr e1) (fun e1 ->
+        BU.bind_opt (unembed_expr e2) (fun e2 ->
+        Some <| Shl (e1, e2)))
+
+    | Tm_fvar fv, [(e1, _); (e2, _)] when S.fv_eq_lid fv ref_E_Shr.lid ->
+        BU.bind_opt (unembed_expr e1) (fun e1 ->
+        BU.bind_opt (unembed_expr e2) (fun e2 ->
+        Some <| Shr (e1, e2)))
+
+    | Tm_fvar fv, [(e, _)] when S.fv_eq_lid fv ref_E_Neg.lid ->
+        BU.bind_opt (unembed_expr e) (fun e ->
+        Some <| Neg e)
+
+     | Tm_fvar fv, [(e1, _); (e2, _)] when S.fv_eq_lid fv ref_E_Udiv.lid ->
+        BU.bind_opt (unembed_expr e1) (fun e1 ->
+        BU.bind_opt (unembed_expr e2) (fun e2 ->
+        Some <| Udiv (e1, e2)))
+
+    | Tm_fvar fv, [(e1, _); (e2, _)] when S.fv_eq_lid fv ref_E_Umod.lid ->
+        BU.bind_opt (unembed_expr e1) (fun e1 ->
+        BU.bind_opt (unembed_expr e2) (fun e2 ->
+        Some <| Umod (e1, e2)))
+
+    | Tm_fvar fv, [(e1, _); (e2, _)] when S.fv_eq_lid fv ref_E_MulMod.lid ->
+        BU.bind_opt (unembed_expr e1) (fun e1 ->
+        BU.bind_opt (unembed_expr e2) (fun e2 ->
+        Some <| MulMod (e1, e2)))
+
+    | Tm_fvar fv, [(e, _)] when S.fv_eq_lid fv ref_E_NatToBv.lid ->
+        BU.bind_opt (unembed_expr e) (fun e ->
+        Some <| NatToBv e)
+
+    | _ ->
+        Err.log_issue t.pos (Err.Warning_NotEmbedded, (BU.format1 "Not an embedded expr: %s" (Print.term_to_string t)));
+        None
