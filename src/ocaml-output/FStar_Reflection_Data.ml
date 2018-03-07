@@ -259,6 +259,142 @@ let (__proj__Mkrefl_constant__item__t :
     match projectee with
     | { lid = __fname__lid; t = __fname__t;_} -> __fname__t
   
+type expr =
+  | Lit of FStar_BigInt.t 
+  | Atom of (FStar_BigInt.t,FStar_Syntax_Syntax.term)
+  FStar_Pervasives_Native.tuple2 
+  | Plus of (expr,expr) FStar_Pervasives_Native.tuple2 
+  | Mult of (expr,expr) FStar_Pervasives_Native.tuple2 
+  | Minus of (expr,expr) FStar_Pervasives_Native.tuple2 
+  | Land of (expr,expr) FStar_Pervasives_Native.tuple2 
+  | Lxor of (expr,expr) FStar_Pervasives_Native.tuple2 
+  | Lor of (expr,expr) FStar_Pervasives_Native.tuple2 
+  | Ladd of (expr,expr) FStar_Pervasives_Native.tuple2 
+  | Lsub of (expr,expr) FStar_Pervasives_Native.tuple2 
+  | Shl of (expr,expr) FStar_Pervasives_Native.tuple2 
+  | Shr of (expr,expr) FStar_Pervasives_Native.tuple2 
+  | Neg of expr 
+  | Udiv of (expr,expr) FStar_Pervasives_Native.tuple2 
+  | Umod of (expr,expr) FStar_Pervasives_Native.tuple2 
+  | MulMod of (expr,expr) FStar_Pervasives_Native.tuple2 
+  | NatToBv of expr [@@deriving show]
+let (uu___is_Lit : expr -> Prims.bool) =
+  fun projectee  ->
+    match projectee with | Lit _0 -> true | uu____854 -> false
+  
+let (__proj__Lit__item___0 : expr -> FStar_BigInt.t) =
+  fun projectee  -> match projectee with | Lit _0 -> _0 
+let (uu___is_Atom : expr -> Prims.bool) =
+  fun projectee  ->
+    match projectee with | Atom _0 -> true | uu____870 -> false
+  
+let (__proj__Atom__item___0 :
+  expr ->
+    (FStar_BigInt.t,FStar_Syntax_Syntax.term) FStar_Pervasives_Native.tuple2)
+  = fun projectee  -> match projectee with | Atom _0 -> _0 
+let (uu___is_Plus : expr -> Prims.bool) =
+  fun projectee  ->
+    match projectee with | Plus _0 -> true | uu____898 -> false
+  
+let (__proj__Plus__item___0 :
+  expr -> (expr,expr) FStar_Pervasives_Native.tuple2) =
+  fun projectee  -> match projectee with | Plus _0 -> _0 
+let (uu___is_Mult : expr -> Prims.bool) =
+  fun projectee  ->
+    match projectee with | Mult _0 -> true | uu____926 -> false
+  
+let (__proj__Mult__item___0 :
+  expr -> (expr,expr) FStar_Pervasives_Native.tuple2) =
+  fun projectee  -> match projectee with | Mult _0 -> _0 
+let (uu___is_Minus : expr -> Prims.bool) =
+  fun projectee  ->
+    match projectee with | Minus _0 -> true | uu____954 -> false
+  
+let (__proj__Minus__item___0 :
+  expr -> (expr,expr) FStar_Pervasives_Native.tuple2) =
+  fun projectee  -> match projectee with | Minus _0 -> _0 
+let (uu___is_Land : expr -> Prims.bool) =
+  fun projectee  ->
+    match projectee with | Land _0 -> true | uu____982 -> false
+  
+let (__proj__Land__item___0 :
+  expr -> (expr,expr) FStar_Pervasives_Native.tuple2) =
+  fun projectee  -> match projectee with | Land _0 -> _0 
+let (uu___is_Lxor : expr -> Prims.bool) =
+  fun projectee  ->
+    match projectee with | Lxor _0 -> true | uu____1010 -> false
+  
+let (__proj__Lxor__item___0 :
+  expr -> (expr,expr) FStar_Pervasives_Native.tuple2) =
+  fun projectee  -> match projectee with | Lxor _0 -> _0 
+let (uu___is_Lor : expr -> Prims.bool) =
+  fun projectee  ->
+    match projectee with | Lor _0 -> true | uu____1038 -> false
+  
+let (__proj__Lor__item___0 :
+  expr -> (expr,expr) FStar_Pervasives_Native.tuple2) =
+  fun projectee  -> match projectee with | Lor _0 -> _0 
+let (uu___is_Ladd : expr -> Prims.bool) =
+  fun projectee  ->
+    match projectee with | Ladd _0 -> true | uu____1066 -> false
+  
+let (__proj__Ladd__item___0 :
+  expr -> (expr,expr) FStar_Pervasives_Native.tuple2) =
+  fun projectee  -> match projectee with | Ladd _0 -> _0 
+let (uu___is_Lsub : expr -> Prims.bool) =
+  fun projectee  ->
+    match projectee with | Lsub _0 -> true | uu____1094 -> false
+  
+let (__proj__Lsub__item___0 :
+  expr -> (expr,expr) FStar_Pervasives_Native.tuple2) =
+  fun projectee  -> match projectee with | Lsub _0 -> _0 
+let (uu___is_Shl : expr -> Prims.bool) =
+  fun projectee  ->
+    match projectee with | Shl _0 -> true | uu____1122 -> false
+  
+let (__proj__Shl__item___0 :
+  expr -> (expr,expr) FStar_Pervasives_Native.tuple2) =
+  fun projectee  -> match projectee with | Shl _0 -> _0 
+let (uu___is_Shr : expr -> Prims.bool) =
+  fun projectee  ->
+    match projectee with | Shr _0 -> true | uu____1150 -> false
+  
+let (__proj__Shr__item___0 :
+  expr -> (expr,expr) FStar_Pervasives_Native.tuple2) =
+  fun projectee  -> match projectee with | Shr _0 -> _0 
+let (uu___is_Neg : expr -> Prims.bool) =
+  fun projectee  ->
+    match projectee with | Neg _0 -> true | uu____1174 -> false
+  
+let (__proj__Neg__item___0 : expr -> expr) =
+  fun projectee  -> match projectee with | Neg _0 -> _0 
+let (uu___is_Udiv : expr -> Prims.bool) =
+  fun projectee  ->
+    match projectee with | Udiv _0 -> true | uu____1190 -> false
+  
+let (__proj__Udiv__item___0 :
+  expr -> (expr,expr) FStar_Pervasives_Native.tuple2) =
+  fun projectee  -> match projectee with | Udiv _0 -> _0 
+let (uu___is_Umod : expr -> Prims.bool) =
+  fun projectee  ->
+    match projectee with | Umod _0 -> true | uu____1218 -> false
+  
+let (__proj__Umod__item___0 :
+  expr -> (expr,expr) FStar_Pervasives_Native.tuple2) =
+  fun projectee  -> match projectee with | Umod _0 -> _0 
+let (uu___is_MulMod : expr -> Prims.bool) =
+  fun projectee  ->
+    match projectee with | MulMod _0 -> true | uu____1246 -> false
+  
+let (__proj__MulMod__item___0 :
+  expr -> (expr,expr) FStar_Pervasives_Native.tuple2) =
+  fun projectee  -> match projectee with | MulMod _0 -> _0 
+let (uu___is_NatToBv : expr -> Prims.bool) =
+  fun projectee  ->
+    match projectee with | NatToBv _0 -> true | uu____1270 -> false
+  
+let (__proj__NatToBv__item___0 : expr -> expr) =
+  fun projectee  -> match projectee with | NatToBv _0 -> _0 
 let (fstar_refl_lid : Prims.string Prims.list -> FStar_Ident.lident) =
   fun s  ->
     FStar_Ident.lid_of_path (FStar_List.append ["FStar"; "Reflection"] s)
@@ -275,23 +411,23 @@ let (fstar_refl_data_lid : Prims.string -> FStar_Ident.lident) =
 let (fstar_refl_data_const : Prims.string -> refl_constant) =
   fun s  ->
     let lid = fstar_refl_data_lid s  in
-    let uu____749 = FStar_Syntax_Syntax.tdataconstr lid  in
-    { lid; t = uu____749 }
+    let uu____1301 = FStar_Syntax_Syntax.tdataconstr lid  in
+    { lid; t = uu____1301 }
   
 let (mk_refl_types_lid_as_term : Prims.string -> FStar_Syntax_Syntax.term) =
   fun s  ->
-    let uu____753 = fstar_refl_types_lid s  in
-    FStar_Syntax_Syntax.tconst uu____753
+    let uu____1305 = fstar_refl_types_lid s  in
+    FStar_Syntax_Syntax.tconst uu____1305
   
 let (mk_refl_syntax_lid_as_term : Prims.string -> FStar_Syntax_Syntax.term) =
   fun s  ->
-    let uu____757 = fstar_refl_syntax_lid s  in
-    FStar_Syntax_Syntax.tconst uu____757
+    let uu____1309 = fstar_refl_syntax_lid s  in
+    FStar_Syntax_Syntax.tconst uu____1309
   
 let (mk_refl_data_lid_as_term : Prims.string -> FStar_Syntax_Syntax.term) =
   fun s  ->
-    let uu____761 = fstar_refl_data_lid s  in
-    FStar_Syntax_Syntax.tconst uu____761
+    let uu____1313 = fstar_refl_data_lid s  in
+    FStar_Syntax_Syntax.tconst uu____1313
   
 let (fstar_refl_inspect_lid : FStar_Ident.lident) =
   fstar_refl_basic_lid "inspect" 
@@ -375,3 +511,20 @@ let (ord_Eq : FStar_Syntax_Syntax.term) =
   FStar_Syntax_Syntax.tdataconstr ord_Eq_lid 
 let (ord_Gt : FStar_Syntax_Syntax.term) =
   FStar_Syntax_Syntax.tdataconstr ord_Gt_lid 
+let (ref_E_Lit : refl_constant) = fstar_refl_data_const "Lit" 
+let (ref_E_Atom : refl_constant) = fstar_refl_data_const "Atom" 
+let (ref_E_Plus : refl_constant) = fstar_refl_data_const "Plus" 
+let (ref_E_Mult : refl_constant) = fstar_refl_data_const "Mult" 
+let (ref_E_Minus : refl_constant) = fstar_refl_data_const "Minus" 
+let (ref_E_Land : refl_constant) = fstar_refl_data_const "Land" 
+let (ref_E_Lxor : refl_constant) = fstar_refl_data_const "Lxor" 
+let (ref_E_Lor : refl_constant) = fstar_refl_data_const "Lor" 
+let (ref_E_Ladd : refl_constant) = fstar_refl_data_const "Ladd" 
+let (ref_E_Lsub : refl_constant) = fstar_refl_data_const "Lsub" 
+let (ref_E_Shl : refl_constant) = fstar_refl_data_const "Shl" 
+let (ref_E_Shr : refl_constant) = fstar_refl_data_const "Shr" 
+let (ref_E_Neg : refl_constant) = fstar_refl_data_const "Neg" 
+let (ref_E_Udiv : refl_constant) = fstar_refl_data_const "Udiv" 
+let (ref_E_Umod : refl_constant) = fstar_refl_data_const "Umod" 
+let (ref_E_MulMod : refl_constant) = fstar_refl_data_const "MulMod" 
+let (ref_E_NatToBv : refl_constant) = fstar_refl_data_const "NatToBv" 
